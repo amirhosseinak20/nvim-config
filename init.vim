@@ -3,8 +3,10 @@ scriptencoding utf-8
 set encoding=utf-8
 set clipboard=unnamed
 source ~/.config/nvim/plugs.vim
+set nocompatible
 
 " ======= visuals ======= "
+set guifont=FiraCode\ Nerd\ Font:h13
 set number
 syntax enable
 set background=dark
@@ -28,11 +30,6 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 
-if (has("GuiFont"))
-  let s:fontsize = 13
-  execute "GuiFont! Fira Code:h" . s:fontsize 
-endif
-
 set splitbelow
 set splitright
 
@@ -41,6 +38,7 @@ set cmdheight=1
 " ======= shortcuts ======= "
 nmap <Leader>ec :tabedit $MYVIMRC<cr>
 nmap <Leader>ep :tabedit ~/.config/nvim/plugs.vim<cr>
+nmap <Leader>eg :tabedit ~/.config/nvim/ginit.vim<cr>
 
 noremap <Leader>t1 1gt
 noremap <Leader>t2 2gt
@@ -62,9 +60,36 @@ nnoremap <C-H> <C-W><C-H>
 " close tabs with C+w
 nnoremap <C-w> :q<cr>
 
+" save document
+nnoremap <C-s> :w<cr>
+
 " ======= autos ======= "
 augroup autosourcing
 	autocmd!
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
+
+" ======== Editor ======= "
+" allow undo history to persist after closing buffer
+if has('persistent_undo')
+  set undodir=~/.local/share/nvim/_undo
+  set undofile
+end
+
+" Allow for named template literals to be highlighted
+" in a different syntax than the main buffer.
+" https://github.com/Quramy/vim-js-pretty-template
+function EnableTemplateLiteralColors()
+  " list of named template literal tags and their syntax here
+  call jspretmpl#register_tag('hbs', 'handlebars')
+
+  autocmd FileType javascript JsPreTmpl
+  autocmd FileType typescript JsPreTmpl
+
+  " compat with leafgarland/typescript-vim
+  autocmd FileType typescript syn clear foldBraces
+endfunction
+
+call EnableTemplateLiteralColors()
+
 
