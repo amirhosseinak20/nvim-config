@@ -63,10 +63,19 @@ nnoremap <C-w> :q<cr>
 " save document
 nnoremap <C-s> :w<cr>
 
+" indent line with <C-]>
+nnoremap <C-]> V>
+
+" unindent line with <C-]>
+nnoremap <C-[> V<
+
 " ======= autos ======= "
 augroup autosourcing
 	autocmd!
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+  if (has("g:loaded_webdevicons") && g:loaded_webdevicons)
+    call webdevicons#refresh()
+  endif
 augroup END
 
 " ======== Editor ======= "
@@ -92,4 +101,5 @@ endfunction
 
 call EnableTemplateLiteralColors()
 
-
+" enable folding base on syntax
+setlocal foldmethod=syntax

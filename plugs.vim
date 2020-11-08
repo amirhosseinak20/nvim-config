@@ -15,7 +15,6 @@ call plug#begin('~/.config/nvim/plugged')
   " ===== Linting
   
   " ======= code manipulate ======= "
-  Plug 'tpope/vim-surround'
   Plug 'mattn/emmet-vim'
   Plug 'kevinoid/vim-jsonc'
 
@@ -29,11 +28,23 @@ call plug#begin('~/.config/nvim/plugged')
 
   " Working with code
   Plug 'editorconfig/editorconfig-vim'
+  Plug 'scrooloose/nerdcommenter'
+  " Add spaces after comment delimiters by default
+  let g:NERDSpaceDelims = 1
+
+  Plug 'tpope/vim-rvm'
+  Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-surround'
+  " define shortcuts for replacements
+  lnoremap <leader>r cs
+  lnoremap <leader>d ysiw
 
   """"""""""""""""""""
   " Language Servers
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-   
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-bundler'
+
   try
     let g:coc_global_extensions = [
       \ 'coc-actions',
