@@ -1,7 +1,0 @@
-{
-  "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
-  "solargraph.commandPath": "/usr/bin/solargraph",
-  "solargraph.bundlerPath": "/usr/bin/bundler",
-  "solargraph.useBundler": true
-}
