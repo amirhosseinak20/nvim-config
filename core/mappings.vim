@@ -48,10 +48,13 @@ nnoremap <silent> <leader>cd :<C-U>lcd %:p:h<CR>:pwd<CR>
 tnoremap <ESC>   <C-\><C-n>
 
 " mapping for switching between splits
-nnoremap <silent> <C-l> <C-w>l
-nnoremap <silent> <C-h> <C-w>h
-nnoremap <silent> <C-j> <C-w>j
-nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <leader>sl <C-w>l
+nnoremap <silent> <leader>sh <C-w>h
+nnoremap <silent> <leader>sj <C-w>j
+nnoremap <silent> <leader>sk <C-w>k
 
 " mapping for saving file with ctrl+s
 nnoremap <silent> <C-s> :w<cr>
+
+" setting noop for s
+noremap s <Nop>

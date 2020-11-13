@@ -8,6 +8,8 @@ set encoding=utf-8      " set encoding utf-8
 set mouse=a       " enable mouse usage (all modes)
 set cmdheight=1       " set command mode height 1 line
 
+let mapleader=','     " changing mapleader to ','
+
 set foldmethod=expr
   \ foldexpr=lsp#ui#vim#folding#foldexpr()
   \ foldtext=lsp#ui#vim#folding#foldtext()
@@ -58,3 +60,5 @@ set history=500  " The number of command and search history to keep
 
 set list
 set lcs=tab:>-,space:.
+
+let g:ruby_host_prog = 'rvm system do neovim-ruby-host'

@@ -23,17 +23,13 @@ call plug#begin(g:plugin_home)
   Plug 'junegunn/vim-easy-align'
 
   " Auto-completion plugins
-  Plug 'prabirshrestha/vim-lsp'                                   " Vim Language Server
-  Plug 'mattn/vim-lsp-settings'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   " Language-Specific Plugins
   Plug 'mattn/emmet-vim'                                          " HTML
-  Plug 'ryanolsonx/vim-lsp-typescript'
-  Plug 'ryanolsonx/vim-lsp-python'
   Plug 'sheerun/vim-polyglot'
   Plug 'vim-ruby/vim-ruby'
+  Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-rails'
 
   " Search related Plugins
@@ -50,7 +46,7 @@ call plug#begin(g:plugin_home)
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'ctrlpvim/ctrlp.vim'                                       " full path fuzzy file, buffer, mru, tag, ...finder for vim
-
+  Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
   " File editting plugin
   " Snippet engine and snippet template
@@ -61,6 +57,7 @@ call plug#begin(g:plugin_home)
   Plug 'tpope/vim-eunuch'                                         " Handy unix command inside Vim (Rename, Move etc.)
   Plug 'tpope/vim-repeat'                                         " Repeat vim motions
   Plug 'preservim/nerdcommenter'
+  Plug 'tpope/vim-surround'
 
   " Linting, formating
   Plug 'dense-analysis/ale'                                       " Syntax check and make
@@ -224,132 +221,53 @@ let g:ale_pattern_options = {
 let g:ale_pattern_options_enabled = 1
 
 """""""""""""""""""""Language Specific Plugins Configs"""""""""""""""""""""""""""""
-" vim-lsp
-"
-if executable('solargraph')
-    " gem install solargraph
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'solargraph',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'solargraph stdio']},
-        \ 'initialization_options': {"diagnostics": "true"},
-        \ 'whitelist': ['ruby'],
-        \ })
-endif
-
-if executable('vim-language-server')
-  augroup LspVim
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'vim-language-server',
-        \ 'cmd': {server_info->['vim-language-server', '--stdio']},
-        \ 'whitelist': ['vim'],
-        \ 'initialization_options': {
-        \   'vimruntime': $VIMRUNTIME,
-        \   'runtimepath': &rtp,
-        \ }})
-  augroup END
-endif
-
-if executable('pyls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
-        \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}}
-        \ })
-endif
-
-if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-      \ 'name': 'javascript support using typescript-language-server',
-      \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-      \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
-      \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact']
-      \ })
-
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-        \ 'whitelist': ['typescript', 'typescript.tsx'],
-        \ })
-endif
-
-if executable('yaml-language-server')
-  augroup LspYaml
-   autocmd!
-   autocmd User lsp_setup call lsp#register_server({
-       \ 'name': 'yaml-language-server',
-       \ 'cmd': {server_info->['yaml-language-server', '--stdio']},
-       \ 'whitelist': ['yaml', 'yaml.ansible'],
-       \ 'workspace_config': {
-       \   'yaml': {
-       \     'validate': v:true,
-       \     'hover': v:true,
-       \     'completion': v:true,
-       \     'customTags': [],
-       \     'schemas': {},
-       \     'schemaStore': { 'enable': v:true },
-       \   }
-       \ }
-       \})
-  augroup END
-endif
-
-if executable('html-languageserver')
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'html-languageserver',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
-    \ 'whitelist': ['html'],
-  \ })
-endif
-
-if executable('docker-langserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'docker-langserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
-        \ 'whitelist': ['dockerfile'],
-        \ })
-endif
-
-if executable('css-languageserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'css-languageserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-        \ 'whitelist': ['css', 'less', 'sass'],
-        \ })
-endif
-
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-
-    " refer to doc to add more commands
+" Coc-nvim
+let g:coc_global_extensions = [
+\ 'coc-actions',
+\ 'coc-json',
+\ 'coc-git',
+\ 'coc-solargraph', 
+\ 'coc-ember', 
+\ 'coc-tsserver', 
+\ 'coc-yaml', 
+\ 'coc-svg', 
+\ 'coc-spell-checker', 
+\ 'coc-python', 
+\ 'coc-html', 
+\ 'coc-css',
+\ 'coc-vimlsp',
+\ 'coc-highlight'
+\ ]
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
-
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+inoremap <silent><expr> <Tab>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<Tab>" :
+    \ coc#refresh()
+" use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+"" Close preview window when completion is done.
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 """"""""""""""""""""""Navigation Plugins Config""""""""""""""""""""""""""""
 " NERDTree
 "
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <leader>b :NERDTreeToggle<CR>
+map <leader>nt :NERDTreeToggle<CR>
+let g:NERDSpaceDelims = 1
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
+
 """""""""""""""""""""""""""""""""Others"""""""""""""""""""""""""""""""""""""
-"sdj;fasl2gt1gtdffffj
 nmap <F8> :TagbarToggle<CR>
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
@@ -362,12 +280,29 @@ let g:tagbar_type_ruby = {
     \ ]
 \ }
 
-let g:NERDSpaceDelims = 1
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+""""""""""""""""""""""""""""""CtrlP""""""""""""""""""""""""""""""
+nnoremap <leader>b :CtrlPBuffer<cr>
+
+""""""""""""""""""""""""""""LeaderF""""""""""""""""""""""""""""
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+
+let g:Lf_ShortcutF = "<leader>ff"
+noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+
+noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+" search visually selected text literally
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+noremap go :<C-U>Leaderf! rg --recall<CR>
 
