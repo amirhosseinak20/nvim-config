@@ -61,4 +61,7 @@ set history=500  " The number of command and search history to keep
 set list
 set lcs=tab:>-,space:.
 
-let g:ruby_host_prog = 'rvm system do neovim-ruby-host'
+if (g:is_linux || g:is_mac)
+  let g:ruby_host_prog = 'rvm system do neovim-ruby-host'
+endif
+

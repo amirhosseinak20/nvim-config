@@ -14,15 +14,7 @@ let g:did_install_default_menus = 1  " do not load menu
 
 " Path to Python 3 interpreter (must be an absolute path), make startup
 " faster. See https://neovim.io/doc/user/provider.html.
-if executable('python')
-   if g:is_win
-    let g:python3_host_prog=substitute(exepath('python'), '.exe$', '', 'g')
-  elseif g:is_linux || g:is_mac
     let g:python3_host_prog=exepath('python3')
-  endif
-else
-  echoerr 'Python 3 executable not found! You must install Python 3 and set its PATH correctly!'
-endif
 
 "{{ Disable loading certain plugins
 " Whether to load netrw by default, see
