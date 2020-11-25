@@ -31,6 +31,11 @@ call plug#begin(g:plugin_home)
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-rails'
+  Plug 'mxw/vim-jsx'
+  Plug 'pangloss/vim-javascript'
+  Plug 'ianks/vim-tsx'
+  Plug 'leafgarland/typescript-vim'
+  Plug 'alvan/vim-closetag'
 
   " Search related Plugins
   Plug 'justinmk/vim-sneak'                                       " Super fast movement with vim-sneak
@@ -64,6 +69,7 @@ call plug#begin(g:plugin_home)
 
   " Git related plugins
   Plug 'airblade/vim-gitgutter'                                   " git diff in sign column
+  Plug 'tpope/vim-fugitive'
 
   " Misc plugins
   Plug 'andymass/vim-matchup'                                     " Modern matchit implementation
@@ -188,13 +194,18 @@ let g:ale_linters = {
   \ 'vim': ['vint'],
   \ 'cpp': ['clang'],
   \ 'c': ['clang'],
-  \ 'ruby': ['rubocop']
+  \ 'ruby': ['rubocop'],
+  \ 'javascript': ['eslint'],
+  \ 'css': ['prettier']
 \}
 
 let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'ruby': ['rubocop']
+  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \ 'ruby': ['rubocop'],
+  \ 'javascript': ['prettier', 'eslint'],
+  \ 'css': ['prettier']
 \}
+
 let g:ale_sign_column_always = 1
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
@@ -219,6 +230,7 @@ let g:ale_pattern_options = {
 \}
 " If you configure g:ale_pattern_options outside of vimrc, you need this.
 let g:ale_pattern_options_enabled = 1
+nmap <leader>d <Plug>(ale_fix)
 
 """""""""""""""""""""Language Specific Plugins Configs"""""""""""""""""""""""""""""
 " Coc-nvim
@@ -236,27 +248,10 @@ let g:coc_global_extensions = [
 \ 'coc-html', 
 \ 'coc-css',
 \ 'coc-vimlsp',
-\ 'coc-highlight'
+\ 'coc-highlight',
+\ 'coc-emmet',
+\ 'coc-yank'
 \ ]
-" " use <tab> for trigger completion and navigate to the next complete item
-" function! s:check_back_space() abort
-" let col = col('.') - 1
-" return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
-" inoremap <silent><expr> <Tab>
-"     \ pumvisible() ? "\<C-n>" :
-"     \ <SID>check_back_space() ? "\<Tab>" :
-"     \ coc#refresh()
-" " use <c-space>for trigger completion
-" inoremap <silent><expr> <c-space> coc#refresh()
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" " Remap for rename current word
-" nmap <leader>rn <Plug>(coc-rename)
-" "" Close preview window when completion is done.
-" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TextEdit might fail if hidden is not set.
 set hidden
 
@@ -338,10 +333,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!

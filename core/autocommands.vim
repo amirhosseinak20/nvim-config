@@ -70,3 +70,9 @@ augroup autosourcing
         autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
+" by default .ts file are not identified as typescript and .tsx files are not
+" identified as typescript react file, so add following
+augroup tsrecoognition
+  autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+  autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+augroup END
