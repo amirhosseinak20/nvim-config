@@ -78,6 +78,7 @@ call plug#begin(g:plugin_home)
   " Others
   Plug 'itchyny/vim-highlighturl'                                 " Highlight URLs inside vim
   Plug 'preservim/tagbar'
+  Plug 'wakatime/vim-wakatime'                                    " Timer
 
 call plug#end()
 
@@ -252,22 +253,6 @@ let g:coc_global_extensions = [
 \ 'coc-emmet',
 \ 'coc-yank'
 \ ]
-" TextEdit might fail if hidden is not set.
-set hidden
-
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -414,6 +399,8 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" Setup keymap to open yank list like:
+nnoremap <silent> <space>y  :<C-u>CocList -A yank<cr>
 
 """"""""""""""""""""""Navigation Plugins Config""""""""""""""""""""""""""""
 " NERDTree

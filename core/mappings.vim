@@ -56,5 +56,3 @@ nnoremap <silent> <leader>sk <C-w>k
 " mapping for saving file with ctrl+s
 nnoremap <silent> <C-s> :w<cr>
 
-" setting noop for s
-noremap s <Nop>

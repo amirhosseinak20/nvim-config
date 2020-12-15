@@ -76,3 +76,12 @@ augroup tsrecoognition
   autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
   autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 augroup END
+
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+" open terminal on ctrl+n
+function! OpenTerminal()
+  split term://bash
+  resize 10
+endfunction
+nnoremap <c-n> :call OpenTerminal()<CR>
