@@ -8,6 +8,20 @@ let g:plugin_home=expand(stdpath('data') . '/plugged')
 
 call plug#begin(g:plugin_home)
   " Make sure you use single quotes
+  " UI Plugins
+  Plug 'ajh17/spacegray.vim'
+  Plug 'altercation/vim-colors-solarized'
+  Plug 'tomasr/molokai'
+  Plug 'joshdick/onedark.vim'
+  if !exists('g:started_by_firenvim')
+    " colorful status line and theme
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'mhinz/vim-startify'
+  endif
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'junegunn/vim-easy-align'
+
   " Auto-completion plugins
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -17,11 +31,11 @@ call plug#begin(g:plugin_home)
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-rails'
-  " Plug 'mxw/vim-jsx'
-  " Plug 'pangloss/vim-javascript'
-  " Plug 'ianks/vim-tsx'
-  " Plug 'leafgarland/typescript-vim'
-  " Plug 'alvan/vim-closetag'
+  Plug 'mxw/vim-jsx'
+  Plug 'pangloss/vim-javascript'
+  Plug 'ianks/vim-tsx'
+  Plug 'leafgarland/typescript-vim'
+  Plug 'alvan/vim-closetag'
 
   " Search related Plugins
   Plug 'justinmk/vim-sneak'                                       " Super fast movement with vim-sneak
@@ -36,8 +50,8 @@ call plug#begin(g:plugin_home)
   endif
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'ctrlpvim/ctrlp.vim'                                       " full path fuzzy file, buffer, mru, tag, ...finder for vim
   Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-  Plug 'mileszs/ack.vim'
 
   " File editting plugin
   " Snippet engine and snippet template
@@ -65,20 +79,6 @@ call plug#begin(g:plugin_home)
   Plug 'itchyny/vim-highlighturl'                                 " Highlight URLs inside vim
   Plug 'preservim/tagbar'
   Plug 'wakatime/vim-wakatime'                                    " Timer
-
-  " UI Plugins
-  Plug 'ajh17/spacegray.vim'
-  Plug 'altercation/vim-colors-solarized'
-  Plug 'tomasr/molokai'
-  Plug 'joshdick/onedark.vim'
-  if !exists('g:started_by_firenvim')
-    " colorful status line and theme
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'mhinz/vim-startify'
-  endif
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
@@ -266,13 +266,11 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -414,9 +412,6 @@ let g:NERDSpaceDelims = 1
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:NERDTreeGitStatusUseNerdFonts = 1 " you should install nerdfonts by yourself. default: 0
-let g:NERDTreeGitStatusShowIgnored = 0 " a heavy feature may cost much more time. default: 0
-let g:NERDTreeGitStatusConcealBrackets = 1 " default: 0
 
 """""""""""""""""""""""""""""""""Others"""""""""""""""""""""""""""""""""""""
 nmap <F8> :TagbarToggle<CR>
@@ -457,7 +452,3 @@ noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
 xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
 noremap go :<C-U>Leaderf! rg --recall<CR>
 
-""""""""""""""""""""""""Ack.vim""""""""""""""""""""""""
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif

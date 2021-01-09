@@ -23,7 +23,6 @@ set linebreak       " Avoid wrapping a line in the middle of a word.
 set backspace=indent,eol,start    " Allow backspacing over indention, line breaks and insertion start.
 set confirm       " Display a confirmation dialog when closing an unsaved file.
 set noswapfile        " Disable swap files.
-set autoindent        " New lines inherit the indentation of previous lines
 
 set clipboard^=unnamed,unnamedplus  " Clipboard settings, always use clipboard for all delete, yank, change, put
           " operation, see https://stackoverflow.com/q/30691466/6064933
@@ -36,12 +35,6 @@ endif
 let &backupdir=g:backupdir
 
 set backupcopy=yes        " copy the original file to backupdir and overwrite it
-
-" General tab settings
-set expandtab
-set tabstop=2       " number of visual spaces per TAB
-set softtabstop=2   " number of spaces in tab when editing
-set shiftwidth=2    " number of spaces to use for autoindent
 
 set ignorecase smartcase    " Ignore case in general, but become case-sensitive when uppercase is present
 set linebreak       " Break line at predefined characters
@@ -57,9 +50,6 @@ set wildignore+=*.aux,*.bbl,*.blg,*.brf,*.fls,*.fdb_latexmk,*.synctex.gz
 
 set visualbell noerrorbells  " Do not use visual and errorbells
 set history=500  " The number of command and search history to keep
-
-set list
-" set lcs=tab:>-,space:.
 
 if (g:is_linux || g:is_mac)
   let g:ruby_host_prog = 'rvm system do neovim-ruby-host'
@@ -78,3 +68,12 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+" Indent specific options
+filetype plugin indent on
+set expandtab                   " On pressing tab, insert 2 spaces
+set tabstop=2                   " show existing tab with 2 spaces width
+set softtabstop=2
+set shiftwidth=2               " when indenting with '>', use 2 spaces width
+set autoindent
+set smartindent
+set cindent

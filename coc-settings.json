@@ -1,10 +1,23 @@
 {
   "solargraph.useBundler": true,
   "cSpell.userWords": [
+    "Amirhossein",
     "Cyclomatic",
+    "Kamya",
     "Leaderf",
+    "Plug'n'Play",
+    "Storyshots",
+    "TODOs",
     "amirhosseinak",
+    "browserslist",
+    "cacheable",
+    "craco",
     "funcobj",
-    "mygroup"
+    "iapp",
+    "markdownlint",
+    "mygroup",
+    "precaching",
+    "preload",
+    "yarnrc"
   ]
 }
