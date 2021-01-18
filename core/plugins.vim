@@ -36,7 +36,7 @@ call plug#begin(g:plugin_home)
   endif
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+  Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
   Plug 'mileszs/ack.vim'
 
   " File editting plugin
@@ -50,9 +50,6 @@ call plug#begin(g:plugin_home)
   Plug 'preservim/nerdcommenter'
   Plug 'tpope/vim-surround'
 
-  " Linting, formating
-  Plug 'dense-analysis/ale'                                       " Syntax check and make
-
   " Git related plugins
   Plug 'airblade/vim-gitgutter'                                   " git diff in sign column
   Plug 'tpope/vim-fugitive'
@@ -65,6 +62,7 @@ call plug#begin(g:plugin_home)
   Plug 'itchyny/vim-highlighturl'                                 " Highlight URLs inside vim
   Plug 'preservim/tagbar'
   Plug 'wakatime/vim-wakatime'                                    " Timer
+  Plug 'editorconfig/editorconfig-vim'                            " support for editorconfig
 
   " UI Plugins
   Plug 'ajh17/spacegray.vim'
@@ -186,53 +184,6 @@ call plug#end()
     autocmd ColorScheme * hi MatchWord cterm=underline gui=underline
   augroup END
 
-""""""""""""""""""""""""""""""""""""Linters""""""""""""""""""""""""""""""""""""""""
-" ale
-" Only run linters in the g:ale_linters dictionary
-let g:ale_linters_explicit = 1
-
-let g:ale_linters = {
-  \ 'vim': ['vint'],
-  \ 'cpp': ['clang'],
-  \ 'c': ['clang'],
-  \ 'ruby': ['rubocop'],
-  \ 'javascript': ['eslint'],
-  \ 'css': ['prettier']
-\}
-
-let g:ale_fixers = {
-  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-  \ 'ruby': ['rubocop'],
-  \ 'javascript': ['prettier', 'eslint'],
-  \ 'css': ['prettier']
-\}
-
-let g:ale_sign_column_always = 1
-function! LinterStatus() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-
-    return l:counts.total == 0 ? 'OK' : printf(
-    \   '%dW %dE',
-    \   all_non_errors,
-    \   all_errors
-    \)
-endfunction
-
-set statusline=%{LinterStatus()}
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-" Do not lint or fix minified files.
-let g:ale_pattern_options = {
-\ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
-\ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
-\}
-" If you configure g:ale_pattern_options outside of vimrc, you need this.
-let g:ale_pattern_options_enabled = 1
-nmap <leader>d <Plug>(ale_fix)
-
 """""""""""""""""""""Language Specific Plugins Configs"""""""""""""""""""""""""""""
 " Coc-nvim
 let g:coc_global_extensions = [
@@ -251,10 +202,16 @@ let g:coc_global_extensions = [
 \ 'coc-vimlsp',
 \ 'coc-highlight',
 \ 'coc-emmet',
-\ 'coc-yank'
+\ 'coc-yank',
+\ 'https://github.com/rodrigore/coc-tailwind-intellisense',
+\ 'coc-prettier',
+\ 'coc-cssmodules',
+\ 'coc-eslint',
+\ 'coc-highlight',
 \ ]
-
-" Always show the signcolumn, otherwise it would shift the text each time
+" \ 'coc-tabnine'
+" \ ]
+" " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 if has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
@@ -404,7 +361,14 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Setup keymap to open yank list like:
 nnoremap <silent> <space>y  :<C-u>CocList -A yank<cr>
 
-""""""""""""""""""""""Navigation Plugins Config""""""""""""""""""""""""""""
+" add Prettier command
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+vmap <leader>pa  <Plug>(coc-format)
+nmap <leader>pa  <Plug>(coc-format)
+vmap <leader>p  <Plug>(coc-format-selected)
+nmap <leader>p  <Plug>(coc-format-selected)
+
+"""""""""""""""""""""Navigation Plugins Config""""""""""""""""""""""""""""
 " NERDTree
 "
 autocmd StdinReadPre * let s:std_in=1
@@ -437,8 +401,6 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-""""""""""""""""""""""""""""""CtrlP""""""""""""""""""""""""""""""
-nnoremap <leader>b :CtrlPBuffer<cr>
 
 """"""""""""""""""""""""""""LeaderF""""""""""""""""""""""""""""
 let g:Lf_WindowPosition = 'popup'
@@ -461,3 +423,6 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+"""""""""""""""""""""""editorconfig""""""""""""""""""""""
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
