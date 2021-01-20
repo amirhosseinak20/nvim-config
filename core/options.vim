@@ -51,9 +51,9 @@ set wildignore+=*.aux,*.bbl,*.blg,*.brf,*.fls,*.fdb_latexmk,*.synctex.gz
 set visualbell noerrorbells  " Do not use visual and errorbells
 set history=500  " The number of command and search history to keep
 
-if (g:is_linux || g:is_mac)
-  let g:ruby_host_prog = 'rvm system do neovim-ruby-host'
-endif
+" if (g:is_linux || g:is_mac)
+"   let g:ruby_host_prog = 'rvm system do neovim-ruby-host'
+" endif
 
 " TextEdit might fail if hidden is not set.
 set hidden
