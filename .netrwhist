@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =7
-let g:netrw_dirhist_7='/home/amirhosseinak20/Projects/ariana/security-dashboard'
-let g:netrw_dirhist_6='/home/amirhosseinak20/Projects/ariana/security-dashboard/app/controllers'
-let g:netrw_dirhist_5='/home/amirhosseinak20/.config/nvim/core'
-let g:netrw_dirhist_4='/home/amirhosseinak20/Downloads'
-let g:netrw_dirhist_3='/home/amirhosseinak20'
-let g:netrw_dirhist_2='/home/amirhosseinak20/Downloads'
-let g:netrw_dirhist_1='/home/amirhosseinak20'

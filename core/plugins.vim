@@ -208,7 +208,6 @@ let g:coc_global_extensions = [
 \ 'coc-cssmodules',
 \ 'coc-eslint',
 \ 'coc-highlight',
-\ 'coc-snippets'
 \ ]
 " \ 'coc-tabnine'
 " \ ]
@@ -368,10 +367,6 @@ vmap <leader>pa  <Plug>(coc-format)
 nmap <leader>pa  <Plug>(coc-format)
 vmap <leader>p  <Plug>(coc-format-selected)
 nmap <leader>p  <Plug>(coc-format-selected)
-
-" snippets
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
 
 """""""""""""""""""""Navigation Plugins Config""""""""""""""""""""""""""""
 " NERDTree
