@@ -10,10 +10,7 @@ set cmdheight=1       " set command mode height 1 line
 
 let mapleader=','     " changing mapleader to ','
 
-set foldmethod=expr
-  \ foldexpr=lsp#ui#vim#folding#foldexpr()
-  \ foldtext=lsp#ui#vim#folding#foldtext()
-let g:lsp_fold_enabled = 0
+set foldmethod=manual
 
 set splitbelow        " new horizontal splites goes bellow
 set splitright        " new vertical splites goes right
