@@ -6,3 +6,7 @@ if(exists('g:GuiLoaded'))
   GuiRenderLigatures 1 
 
 endif
+
+if exists('g:GtkGuiLoaded')
+  call rpcnotify(1, 'Gui', 'Font', 'FiraCode Nerd Font 11')
+endif
