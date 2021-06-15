@@ -205,9 +205,10 @@ let g:coc_global_extensions = [
 \ 'coc-yank',
 \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
 \ 'coc-prettier',
-\ 'coc-cssmodules',
 \ 'coc-eslint',
 \ 'coc-highlight',
+\ 'coc-markdownlint',
+\ 'coc-stylelint'
 \ ]
 " \ 'coc-tabnine'
 " \ ]
