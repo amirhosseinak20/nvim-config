@@ -74,3 +74,5 @@ set shiftwidth=2               " when indenting with '>', use 2 spaces width
 set autoindent
 set smartindent
 set cindent
+
+set equalalways                  " windows has same size

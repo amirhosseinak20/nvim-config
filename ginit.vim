@@ -8,5 +8,5 @@ if(exists('g:GuiLoaded'))
 endif
 
 if exists('g:GtkGuiLoaded')
-  call rpcnotify(1, 'Gui', 'Font', 'FiraCode Nerd Font 11')
+  call rpcnotify(1, 'Gui', 'Font', 'FiraCode Nerd Font 12')
 endif

@@ -10,6 +10,7 @@ call plug#begin(g:plugin_home)
   " Make sure you use single quotes
   " Auto-completion plugins
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'codota/tabnine-vim'
 
   " Language-Specific Plugins
   " Plug 'mattn/emmet-vim'                                          " HTML
@@ -380,7 +381,7 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
 let g:NERDTreeGitStatusUseNerdFonts = 1 " you should install nerdfonts by yourself. default: 0
-let g:NERDTreeGitStatusShowIgnored = 0 " a heavy feature may cost much more time. default: 0
+let g:NERDTreeGitStatusShowIgnored = 1 " a heavy feature may cost much more time. default: 0
 let g:NERDTreeGitStatusConcealBrackets = 1 " default: 0
 
 """""""""""""""""""""""""""""""""Others"""""""""""""""""""""""""""""""""""""
