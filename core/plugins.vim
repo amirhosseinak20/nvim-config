@@ -206,7 +206,8 @@ let g:coc_global_extensions = [
 \ 'coc-highlight',
 \ 'coc-markdownlint',
 \ 'coc-stylelint',
-\ 'coc-cssmodules'
+\ 'coc-cssmodules',
+\ 'coc-graphql'
 \ ]
 " \ 'coc-ember', 
 " \ 'coc-tabnine'
