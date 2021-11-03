@@ -10,13 +10,13 @@ call plug#begin(g:plugin_home)
   " Make sure you use single quotes
   " Auto-completion plugins
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'codota/tabnine-vim'
+  " Plug 'codota/tabnine-vim'
 
   " Language-Specific Plugins
   " Plug 'mattn/emmet-vim'                                          " HTML
   Plug 'sheerun/vim-polyglot'
   Plug 'vim-ruby/vim-ruby'
-  Plug 'tpope/vim-endwise'
+  " Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-rails'
   " Plug 'mxw/vim-jsx'
   " Plug 'pangloss/vim-javascript'
@@ -42,7 +42,8 @@ call plug#begin(g:plugin_home)
 
   " File editting plugin
   " Snippet engine and snippet template
-  Plug 'jiangmiao/auto-pairs'                                     " Automatic insertion and deletion of a pair of characters
+  " Plug 'jiangmiao/auto-pairs'                                     " Automatic insertion and deletion of a pair of characters
+  Plug 'Raimondi/delimitMate'
   Plug 'tpope/vim-commentary'                                     " Comment plugin
   Plug 'mg979/vim-visual-multi'                                   " Multiple cursor plugin like Sublime Text?
   Plug 'simnalamburt/vim-mundo'                                   " Show undo history visually
@@ -225,13 +226,11 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -247,8 +246,8 @@ endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              " \: \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.

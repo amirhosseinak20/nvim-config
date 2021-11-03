@@ -14,6 +14,7 @@
     "Descriptional",
     "Figma",
     "Fira",
+    "Formik",
     "Geometria",
     "Gomanic",
     "Irancell",
@@ -105,15 +106,21 @@
     "whatsapp",
     "whatsup",
     "yarnrc",
+    "آبان",
     "اعلام",
     "امتیاز",
+    "امیرحسین",
+    "اکبری",
     "باقی",
     "برند",
     "بپرسید",
+    "توسط",
     "دریافت",
     "رایگان",
+    "سایر",
     "لاتین",
-    "نمایید"
+    "نمایید",
+    "گیرنده"
   ],
   "coc.preferences.formatOnSaveFiletypes": [
     "javascriptreact",
@@ -130,5 +137,6 @@
   ],
   "css.validate": false,
   "scss.validate": false,
-  "stylelint.enable": true
+  "stylelint.enable": true,
+  "javascript.suggest.autoImports": true
 }
