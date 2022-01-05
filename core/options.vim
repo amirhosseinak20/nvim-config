@@ -10,7 +10,10 @@ set cmdheight=1       " set command mode height 1 line
 
 let mapleader=','     " changing mapleader to ','
 
-set foldmethod=manual
+"-- FOLDING --  
+" set nofoldenable
+" set foldmethod=syntax "syntax highlighting items specify folds  
+" set foldlevelstart=99 "start file with all folds opened
 
 set splitbelow        " new horizontal splites goes bellow
 set splitright        " new vertical splites goes right

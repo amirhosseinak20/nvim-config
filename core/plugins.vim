@@ -45,6 +45,7 @@ call plug#begin(g:plugin_home)
   Plug 'tpope/vim-repeat'                                         " Repeat vim motions
   Plug 'preservim/nerdcommenter'
   Plug 'tpope/vim-surround'
+  Plug 'konfekt/fastfold'
 
   " Git related plugins
   Plug 'airblade/vim-gitgutter'                                   " git diff in sign column
@@ -383,6 +384,60 @@ let g:NERDTreeGitStatusConcealBrackets = 1 " default: 0
 
 """""""""""""""""""""""""""""""""Others"""""""""""""""""""""""""""""""""""""
                                                             " gutentags
+let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
+command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_ctags_tagfile = '.vim/tags'
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+let g:gutentags_trace = 0
+let g:gutentags_ctags_extra_args = [
+  \ '--tag-relative=yes',
+\ ]
+let g:gutentags_project_root = ['.git', '.svn', 'package.json']
+let g:gutentags_ctags_exclude = [
+  \ 'tmp/*',
+  \ 'log/*',
+  \ 'coverage/*',
+  \ '*.git', '*.svg', '*.hg',
+  \ 'dist',
+  \ 'build',
+  \ '*.stories.*' ,
+  \ 'bin',
+  \ 'node_modules',
+  \ 'vendor',
+  \ '*.md',
+  \ '*.lock',
+  \ '*-lock.json',
+  \ '*bundle*.js',
+  \ '*build*.js',
+  \ '.*rc*',
+  \ '*.json',
+  \ '*.min.*',
+  \ '*.map',
+  \ '*.bak',
+  \ '*.zip',
+  \ '*.pyc',
+  \ '*.class',
+  \ '*.sln',
+  \ '*.Master',
+  \ '*.csproj',
+  \ '*.tmp',
+  \ '*.csproj.user',
+  \ '*.cache',
+  \ '*.pdb',
+  \ 'tags*',
+  \ 'cscope.*',
+  \ '*.exe', '*.dll',
+  \ '*.mp3', '*.ogg', '*.flac',
+  \ '*.swp', '*.swo',
+  \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+  \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+  \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+\ ]
+                                                            " tagbar
 let g:tagbar_autoclose = 1
 let g:tagbar_show_linenumbers = 1
 nmap <F8> :TagbarToggle<CR>
@@ -429,4 +484,7 @@ endif
 """""""""""""""""""""""editorconfig""""""""""""""""""""""
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-let gutentags_ctags_tagfile = '.vim/tags'
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
