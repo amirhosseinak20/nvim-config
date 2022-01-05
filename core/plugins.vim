@@ -29,12 +29,6 @@ call plug#begin(g:plugin_home)
   Plug 'romainl/vim-cool'                                         " Show current search term in different color
   Plug 'haya14busa/vim-asterisk'                                  " Stay after pressing * and search selected text
 
-  " Navigation and tags plugin
-  " Only install these plugins if ctags are installed on the system
-  if executable('ctags')
-    " plugin to manage your tags
-    Plug 'ludovicchabant/vim-gutentags'
-  endif
   Plug 'preservim/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
@@ -62,7 +56,11 @@ call plug#begin(g:plugin_home)
 
   " Others
   Plug 'itchyny/vim-highlighturl'                                 " Highlight URLs inside vim
-  Plug 'preservim/tagbar'
+
+  Plug 'majutsushi/tagbar'
+  Plug 'universal-ctags/ctags'
+  Plug 'ludovicchabant/vim-gutentags'
+
   Plug 'wakatime/vim-wakatime'                                    " Timer
   Plug 'editorconfig/editorconfig-vim'                            " support for editorconfig
 
@@ -103,9 +101,6 @@ call plug#end()
   xmap *  <Plug>(asterisk-z*)
   xmap #  <Plug>(asterisk-z#)
 
-                                                              " gutentags
-  let g:gutentags_ctags_exclude = ['*.md', '*.html', '*.json', '*.toml', '*.css', '*.js',]
-  let g:gutentags_cache_dir     = stdpath('cache') . '/ctags' " The path to store tags files, instead of in the project root.
 
   " mundo
   let g:mundo_verbose_graph = 0
@@ -193,11 +188,11 @@ let g:coc_global_extensions = [
 \ 'coc-json',
 \ 'coc-git',
 \ 'coc-solargraph', 
-\ 'coc-ember', 
 \ 'coc-tsserver', 
 \ 'coc-yaml', 
 \ 'coc-svg', 
 \ 'coc-spell-checker', 
+\ 'coc-cspell-dicts',
 \ 'coc-python', 
 \ 'coc-html', 
 \ 'coc-css',
@@ -210,8 +205,10 @@ let g:coc_global_extensions = [
 \ 'coc-eslint',
 \ 'coc-highlight',
 \ 'coc-markdownlint',
-\ 'coc-stylelint'
+\ 'coc-stylelint',
+\ 'coc-cssmodules'
 \ ]
+" \ 'coc-ember', 
 " \ 'coc-tabnine'
 " \ ]
 " " Always show the signcolumn, otherwise it would shift the text each time
@@ -384,7 +381,11 @@ let g:NERDTreeGitStatusShowIgnored = 1 " a heavy feature may cost much more time
 let g:NERDTreeGitStatusConcealBrackets = 1 " default: 0
 
 """""""""""""""""""""""""""""""""Others"""""""""""""""""""""""""""""""""""""
+                                                            " gutentags
+let g:tagbar_autoclose = 1
+let g:tagbar_show_linenumbers = 1
 nmap <F8> :TagbarToggle<CR>
+map <C-m> :TagbarToggle<CR>
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
         \ 'm:modules',
@@ -395,7 +396,6 @@ let g:tagbar_type_ruby = {
         \ 'F:singleton methods'
     \ ]
 \ }
-
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -427,3 +427,5 @@ endif
 
 """""""""""""""""""""""editorconfig""""""""""""""""""""""
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+let gutentags_ctags_tagfile = '.vim/tags'
