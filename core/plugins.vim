@@ -201,7 +201,6 @@ let g:coc_global_extensions = [
 \ 'coc-highlight',
 \ 'coc-emmet',
 \ 'coc-yank',
-\ 'https://github.com/rodrigore/coc-tailwind-intellisense',
 \ 'coc-prettier',
 \ 'coc-eslint',
 \ 'coc-highlight',

@@ -51,9 +51,9 @@
     "browserslist",
     "cacheable",
     "calc",
+    "camelcase",
     "center",
     "column",
-    "camelcase",
     "commitlint",
     "commitlintrc",
     "craco",
@@ -76,6 +76,7 @@
     "full",
     "funcobj",
     "gutentags",
+    "htmldjango",
     "iapp",
     "icare",
     "iconly",
@@ -163,5 +164,51 @@
   "css.validate": false,
   "scss.validate": false,
   "stylelint.enable": true,
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "languageserver": {
+    "tailwind-lsp": {
+      "command": "tailwindcss-language-server",
+      "args": ["--stdio"],
+      "filetypes": [
+        "html",
+        "htmldjango",
+        "django-html",
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "css"
+      ],
+
+      "rootPatterns": [
+        "tailwind.config.js",
+        "tailwind.config.ts",
+        "postcss.config.js",
+        "postcss.config.ts",
+        "package.json",
+        "node_modules",
+        ".git"
+      ],
+      "settings": {
+        "tailwindCSS": {
+          "includeLanguages": {
+            "htmldjango": "html",
+            "django-html": "html"
+          },
+          "validate": true,
+          "lint": {
+            "cssConflict": "warning",
+            "invalidApply": "error",
+            "invalidScreen": "error",
+            "invalidVariant": "error",
+            "invalidConfigPath": "error",
+            "invalidTailwindDirective": "error",
+            "recommendedVariantOrder": "warning"
+          },
+          "classAttributes": ["class", "className", "classList"],
+          "experimental": {}
+        }
+      }
+    }
+  }
 }
